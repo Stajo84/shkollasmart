@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { jsPDF } from 'jspdf';
-import { X, Sparkles, Loader2, GraduationCap, FileText, Download, Copy, Check, Calendar, Target, Layers, ClipboardCheck, BookOpen, Upload, FileUp, File } from 'lucide-react';
+import { X, Sparkles, Loader as Loader2, GraduationCap, FileText, Download, Copy, Check, Calendar, Target, Layers, ClipboardCheck, BookOpen, Upload, FileUp, File } from 'lucide-react';
 
 // ══════════════════════════════════════════
 // Types & Data
@@ -166,7 +166,7 @@ function generatePlan(
       emoji: '💡',
       duration: `${evokimMin} minuta`,
       content: `• Situata e të nxënit: ${meta.situata}\n• Stuhi mendimesh në çifte — nxënësit diskutojnë 2 minuta\n• Pyetje nxitëse frontale: "Çfarë dini tashmë për ${topic}?"\n• Parashikime — nxënësit shkruajnë 3 gjëra që presin të mësojnë\n• Lidhja me njohuritë paraprake të nxënësve\n• Aktivizimi i kuriozitetit përmes një fakti interesant`,
-      color: 'border-amber-200 bg-amber-50',
+      color: 'border-amber-200 bg-amber-50/60',
     },
     {
       title: `Realizimi i Kuptimit (${realizimMin} min)`,
@@ -175,21 +175,21 @@ function generatePlan(
       content: hasSource
         ? `• Shpërndarje e materialit burimor — nxënësit lexojnë individualish\n• Nënvizimi i koncepteve kryesore në tekst\n• Shpjegim i termave kyçe: ${meta.fjaleKyce.join(', ')}\n• Punë në grupe (4-5 nxënës) — detyrë e bazuar në burim:\n  - Grupi 1-2: Nxirrni faktet kryesore nga teksti\n  - Grupi 3-4: Gjeni shembuj dhe zbatim praktik\n  - Grupi 5: Vlerësoni informacionin e dhënë\n• Çdo grup prezanton gjetjet\n• Diskutim frontal dhe pyetje-përgjigje`
         : `• Prezantim i materialit të ri rreth "${topic}"\n• Lexim i drejtuar — nxënësit lexojnë dhe nënvizojnë pikat kryesore\n• Shpjegim i termave kyçe: ${meta.fjaleKyce.join(', ')}\n• Punë në grupe (4-5 nxënës) — detyrë e strukturuar:\n  - Grupi 1-2: Identifikoni konceptet kryesore\n  - Grupi 3-4: Gjeni shembuj praktikë\n  - Grupi 5: Krahasoni me koncepte të ngjashme\n• Diskutim frontal — çdo grup prezanton gjetjet\n• Pyetje-përgjigje për qartësim`,
-      color: 'border-blue-200 bg-blue-50',
+      color: 'border-blue-200 bg-blue-50/60',
     },
     {
       title: `Reflektimi (${reflektimMin} min)`,
       emoji: '🔄',
       duration: `${reflektimMin} minuta`,
       content: `• Përmbledhje e pikave kryesore — bëhet nga nxënësit\n• Ditari i të mësuarit (INSERT):\n  - ✓ E dija tashmë\n  - + E mësova sot\n  - ? Dua ta di ende\n  - ! Më befasoi\n• Reflektim individual — "3 gjëra që mësova, 2 pyetje që kam, 1 gjë që do zbatoj"\n• Diskutim i hapur — pyetje reflektuese`,
-      color: 'border-emerald-200 bg-emerald-50',
+      color: 'border-emerald-200 bg-emerald-50/60',
     },
     {
       title: `Vlerësimi (${vleresimMin} min)`,
       emoji: '✅',
       duration: `${vleresimMin} minuta`,
       content: `• Kuiz i shkurtër (3-5 pyetje — SmartSchool Live)\n• Detyrë shtëpie e strukturuar\n• Vetëvlerësim me rubrikë\n\n📋 Vlerësimi sipas niveleve:\n(Shih tabelën e vlerësimit më poshtë)`,
-      color: 'border-violet-200 bg-violet-50',
+      color: 'border-violet-200 bg-violet-50/60',
     },
   ];
 
@@ -505,66 +505,120 @@ export default function LessonPlanner({ onClose }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-3xl w-full max-w-3xl shadow-2xl overflow-hidden max-h-[95vh] flex flex-col">
+    <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-3xl w-full max-w-3xl shadow-2xl overflow-hidden max-h-[95vh] flex flex-col ring-1 ring-slate-200/60">
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-gray-100 shrink-0">
+        <div className="relative flex items-center justify-between px-6 py-5 border-b border-slate-100 shrink-0 bg-gradient-to-r from-emerald-50/80 via-white to-teal-50/80">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center"><Calendar className="w-5 h-5 text-white" /></div>
-            <div><h2 className="text-lg font-bold text-gray-900">Planifikuesi i Orës Mësimore</h2><p className="text-xs text-gray-500">Plan ditar sipas programeve lëndore zyrtare</p></div>
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+              <Calendar className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-slate-900 tracking-tight">Planifikuesi i Orës Mësimore</h2>
+              <p className="text-xs text-slate-500 mt-0.5">Plan ditar sipas programeve lëndore zyrtare</p>
+            </div>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-xl"><X className="w-5 h-5 text-gray-500" /></button>
+          <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-xl transition-colors group">
+            <X className="w-5 h-5 text-slate-400 group-hover:text-slate-600" />
+          </button>
         </div>
 
         <div className="flex-1 overflow-y-auto">
           {/* ── FORM ── */}
           {step === 'form' && (
-            <div className="p-6 space-y-5">
+            <div className="p-6 space-y-6">
               {/* Topic */}
               <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2"><Target className="w-4 h-4 text-emerald-500" /> Tema Mësimore</label>
-                <input type="text" value={topic} onChange={e => setTopic(e.target.value)} className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none text-lg" placeholder="p.sh. Teorema e Pitagorës, Rilindja Kombëtare..." />
+                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
+                  <Target className="w-4 h-4 text-emerald-500" /> Tema Mësimore
+                </label>
+                <input
+                  type="text"
+                  value={topic}
+                  onChange={e => setTopic(e.target.value)}
+                  className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100/60 outline-none text-lg font-medium text-slate-900 placeholder:text-slate-400 transition-all"
+                  placeholder="p.sh. Teorema e Pitagorës, Rilindja Kombëtare..."
+                />
               </div>
 
               {/* Subject, Grade, Duration */}
               <div className="grid sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2"><FileText className="w-4 h-4 text-emerald-500" /> Lënda</label>
-                  <select value={subject} onChange={e => setSubject(e.target.value)} className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 outline-none">{SUBJECTS.map(s => <option key={s}>{s}</option>)}</select>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
+                    <FileText className="w-4 h-4 text-emerald-500" /> Lënda
+                  </label>
+                  <select
+                    value={subject}
+                    onChange={e => setSubject(e.target.value)}
+                    className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100/60 outline-none font-medium text-slate-900 bg-white transition-all cursor-pointer"
+                  >
+                    {SUBJECTS.map(s => <option key={s}>{s}</option>)}
+                  </select>
                 </div>
                 <div>
-                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2"><GraduationCap className="w-4 h-4 text-emerald-500" /> Klasa</label>
-                  <select value={grade} onChange={e => setGrade(e.target.value)} className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 outline-none">{GRADES.map(g => <option key={g}>{g}</option>)}</select>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
+                    <GraduationCap className="w-4 h-4 text-emerald-500" /> Klasa
+                  </label>
+                  <select
+                    value={grade}
+                    onChange={e => setGrade(e.target.value)}
+                    className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100/60 outline-none font-medium text-slate-900 bg-white transition-all cursor-pointer"
+                  >
+                    {GRADES.map(g => <option key={g}>{g}</option>)}
+                  </select>
                 </div>
                 <div>
-                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2"><Layers className="w-4 h-4 text-emerald-500" /> Kohëzgjatja</label>
-                  <select value={duration} onChange={e => setDuration(e.target.value)} className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 outline-none">
-                    <option>45 min</option><option>60 min</option><option>90 min (2 orë)</option>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
+                    <Layers className="w-4 h-4 text-emerald-500" /> Kohëzgjatja
+                  </label>
+                  <select
+                    value={duration}
+                    onChange={e => setDuration(e.target.value)}
+                    className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100/60 outline-none font-medium text-slate-900 bg-white transition-all cursor-pointer"
+                  >
+                    <option>45 min</option>
+                    <option>60 min</option>
+                    <option>90 min (2 orë)</option>
                   </select>
                 </div>
               </div>
 
               {/* Auto-detected info */}
-              <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+              <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-4 border border-emerald-100">
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
-                  <div><span className="font-bold text-emerald-800">Fusha:</span> <span className="text-emerald-700">{fusha}</span></div>
-                  <div><span className="font-bold text-emerald-800">Shkalla:</span> <span className="text-emerald-700">{shkalla}</span></div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="font-bold text-emerald-800">Fusha:</span>
+                    <span className="text-emerald-700">{fusha}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="font-bold text-emerald-800">Shkalla:</span>
+                    <span className="text-emerald-700">{shkalla}</span>
+                  </div>
                 </div>
               </div>
 
               {/* Methodology — free text */}
               <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2"><BookOpen className="w-4 h-4 text-emerald-500" /> Metodologjia (Opsionale — shkruani teknikat tuaja)</label>
-                <textarea value={teacherMethodology} onChange={e => setTeacherMethodology(e.target.value)} className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-emerald-500 outline-none resize-none text-sm" rows={3}
-                  placeholder="p.sh. ERR, Mendimi Kritik, Punë në grup, Debat, Projekt-bazuar...\nLëreni bosh për ERR automatik." />
+                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
+                  <BookOpen className="w-4 h-4 text-emerald-500" /> Metodologjia <span className="text-slate-400 font-normal text-xs">(Opsionale)</span>
+                </label>
+                <textarea
+                  value={teacherMethodology}
+                  onChange={e => setTeacherMethodology(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100/60 outline-none resize-none text-sm text-slate-700 placeholder:text-slate-400 transition-all"
+                  rows={3}
+                  placeholder="p.sh. ERR, Mendimi Kritik, Punë në grup, Debat, Projekt-bazuar...  Lëreni bosh për ERR automatik."
+                />
               </div>
 
               {/* ── SOURCE TEXT & FILE UPLOAD ── */}
               <div className="space-y-3">
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                  <Upload className="w-4 h-4 text-emerald-500" /> Burimi i Leksionit (Opsionale)
+                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                  <Upload className="w-4 h-4 text-emerald-500" /> Burimi i Leksionit <span className="text-slate-400 font-normal text-xs">(Opsionale)</span>
                 </label>
-                <p className="text-xs text-gray-400 -mt-1">
+                <p className="text-xs text-slate-400 -mt-1">
                   Ngjisni tekstin nga libri ose ngarkoni PDF — AI do ta bazojë planin te ky material.
                 </p>
 
@@ -572,17 +626,17 @@ export default function LessonPlanner({ onClose }: Props) {
                 <textarea
                   value={sourceText}
                   onChange={e => setSourceText(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none resize-none text-sm leading-relaxed"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100/60 outline-none resize-none text-sm leading-relaxed text-slate-700 placeholder:text-slate-400 transition-all"
                   rows={4}
                   placeholder="Ngjisni këtu tekstin e mësimit nga libri digjital ose burime të tjera..."
                 />
 
                 {/* File Upload */}
                 <div
-                  className={`border-2 border-dashed rounded-xl transition-all ${
+                  className={`border-2 border-dashed rounded-2xl transition-all ${
                     uploadedFileName
-                      ? 'border-green-300 bg-green-50/50'
-                      : 'border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/30 cursor-pointer'
+                      ? 'border-emerald-300 bg-emerald-50/40'
+                      : 'border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30 cursor-pointer'
                   }`}
                   onClick={() => !uploadedFileName && !parsing && fileRef.current?.click()}
                 >
@@ -599,32 +653,36 @@ export default function LessonPlanner({ onClose }: Props) {
                   />
 
                   {parsing ? (
-                    <div className="p-4 text-center">
-                      <Loader2 className="w-6 h-6 text-emerald-500 animate-spin mx-auto mb-2" />
-                      <p className="text-sm text-gray-600">Duke lexuar dokumentin...</p>
+                    <div className="p-5 text-center">
+                      <Loader2 className="w-7 h-7 text-emerald-500 animate-spin mx-auto mb-2" />
+                      <p className="text-sm text-slate-600 font-medium">Duke lexuar dokumentin...</p>
                     </div>
                   ) : uploadedFileName ? (
-                    <div className="p-3 flex items-center justify-between">
+                    <div className="p-3.5 flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <File className="w-5 h-5 text-green-600" />
-                        <span className="text-sm font-medium text-gray-900">{uploadedFileName}</span>
-                        <Check className="w-4 h-4 text-green-500" />
-                        {sourceText.length > 0 && (
-                          <span className="text-xs text-green-600">{sourceText.length.toLocaleString()} karaktere</span>
-                        )}
+                        <div className="w-9 h-9 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
+                          <File className="w-4 h-4 text-emerald-600" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-semibold text-slate-900">{uploadedFileName}</span>
+                          {sourceText.length > 0 && (
+                            <span className="text-xs text-emerald-600">{sourceText.length.toLocaleString()} karaktere</span>
+                          )}
+                        </div>
+                        <Check className="w-4 h-4 text-emerald-500" />
                       </div>
                       <button
                         onClick={(e) => { e.stopPropagation(); handleRemoveFile(); }}
-                        className="p-1.5 hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-lg transition-colors"
+                        className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded-lg transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
                     </div>
                   ) : (
-                    <div className="p-4 text-center">
-                      <div className="flex items-center justify-center gap-2 text-gray-500">
+                    <div className="p-5 text-center">
+                      <div className="flex items-center justify-center gap-2 text-slate-500">
                         <FileUp className="w-5 h-5" />
-                        <span className="text-sm">Ngarko PDF ose TXT</span>
+                        <span className="text-sm font-medium">Ngarko PDF ose TXT</span>
                       </div>
                     </div>
                   )}
@@ -632,13 +690,13 @@ export default function LessonPlanner({ onClose }: Props) {
 
                 {/* Extracted text preview */}
                 {sourceText && !parsing && sourceText.length > 30 && (
-                  <div className="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
-                    <div className="px-3 py-1.5 bg-gray-100 border-b border-gray-200 flex items-center justify-between">
-                      <span className="text-xs font-bold text-gray-500">TEKSTI BURIMOR</span>
-                      <span className="text-xs text-gray-400">{sourceText.length.toLocaleString()} karaktere</span>
+                  <div className="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                    <div className="px-3.5 py-2 bg-slate-100 border-b border-slate-200 flex items-center justify-between">
+                      <span className="text-xs font-bold text-slate-500 tracking-wide">TEKSTI BURIMOR</span>
+                      <span className="text-xs text-slate-400">{sourceText.length.toLocaleString()} karaktere</span>
                     </div>
                     <div className="p-3 max-h-28 overflow-y-auto">
-                      <p className="text-xs text-gray-600 whitespace-pre-wrap leading-relaxed">
+                      <p className="text-xs text-slate-600 whitespace-pre-wrap leading-relaxed">
                         {sourceText.slice(0, 1200)}{sourceText.length > 1200 ? '...' : ''}
                       </p>
                     </div>
@@ -646,7 +704,7 @@ export default function LessonPlanner({ onClose }: Props) {
                 )}
 
                 {sourceText.trim().length > 20 && (
-                  <div className="flex items-center gap-2 text-xs text-emerald-600">
+                  <div className="flex items-center gap-2 text-xs text-emerald-600 font-medium">
                     <Check className="w-3.5 h-3.5" />
                     <span>AI do ta bazojë planin ditar mbi këtë material burimor</span>
                   </div>
@@ -654,7 +712,11 @@ export default function LessonPlanner({ onClose }: Props) {
               </div>
 
               {/* Generate */}
-              <button onClick={handleGenerate} disabled={!topic.trim()} className="w-full py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-xl shadow-xl disabled:opacity-40 flex items-center justify-center gap-3 text-lg hover:-translate-y-0.5 transition-all">
+              <button
+                onClick={handleGenerate}
+                disabled={!topic.trim()}
+                className="w-full py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-2xl shadow-xl shadow-emerald-500/25 disabled:opacity-40 disabled:shadow-none flex items-center justify-center gap-3 text-lg hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-emerald-500/30 transition-all"
+              >
                 <Sparkles className="w-6 h-6" /> Gjenero Planin Ditar
               </button>
             </div>
@@ -663,9 +725,22 @@ export default function LessonPlanner({ onClose }: Props) {
           {/* ── GENERATING ── */}
           {step === 'gen' && (
             <div className="p-10 flex flex-col items-center justify-center min-h-[400px]">
-              <div className="w-24 h-24 rounded-full bg-emerald-100 flex items-center justify-center mb-8"><Loader2 className="w-12 h-12 text-emerald-600 animate-spin" /></div>
-              <div className="w-full max-w-sm mb-4"><div className="w-full bg-gray-100 rounded-full h-3"><div className="bg-gradient-to-r from-emerald-500 to-teal-600 h-3 rounded-full transition-all duration-500" style={{ width: `${progress}%` }} /></div></div>
-              <p className="text-gray-600 font-medium">{msg}</p>
+              <div className="relative w-24 h-24 mb-8">
+                <div className="absolute inset-0 rounded-full bg-emerald-100 animate-ping opacity-60" />
+                <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+                  <Loader2 className="w-12 h-12 text-emerald-600 animate-spin" />
+                </div>
+              </div>
+              <div className="w-full max-w-sm mb-4">
+                <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-emerald-500 to-teal-600 h-2.5 rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+              <p className="text-slate-700 font-semibold">{msg}</p>
+              <p className="text-sm text-slate-400 mt-1">{progress}%</p>
             </div>
           )}
 
@@ -673,12 +748,17 @@ export default function LessonPlanner({ onClose }: Props) {
           {step === 'preview' && plan && (
             <div className="p-6 space-y-5">
               {/* Title */}
-              <div className="text-center border-b-2 border-gray-300 pb-4">
-                <h3 className="text-xl font-bold text-gray-900">PLAN DITAR MËSIMOR</h3>
+              <div className="text-center pb-4 border-b border-slate-200">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-semibold text-emerald-700 tracking-wide">PLAN I GATSHËM</span>
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 tracking-tight">PLAN DITAR MËSIMOR</h3>
+                <p className="text-sm text-slate-500 mt-1">{plan.meta.lenda} — {plan.meta.klasa}</p>
               </div>
 
               {/* Meta Table */}
-              <div className="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
+              <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
                 <table className="w-full text-sm">
                   <tbody>
                     {[
@@ -690,9 +770,9 @@ export default function LessonPlanner({ onClose }: Props) {
                       ['Kohëzgjatja', plan.meta.kohezgjatja],
                       ['Metodologjia', plan.meta.metodologjia],
                     ].map(([label, value], i) => (
-                      <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                        <td className="px-4 py-2.5 font-bold text-gray-900 border-b border-gray-100 w-[180px]">{label}:</td>
-                        <td className="px-4 py-2.5 text-gray-700 border-b border-gray-100">{value}</td>
+                      <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/70'}>
+                        <td className="px-4 py-3 font-bold text-slate-900 border-b border-slate-100 w-[180px]">{label}:</td>
+                        <td className="px-4 py-3 text-slate-700 border-b border-slate-100">{value}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -700,61 +780,105 @@ export default function LessonPlanner({ onClose }: Props) {
               </div>
 
               {/* Rezultatet */}
-              <div className="bg-emerald-50 rounded-2xl p-5 border border-emerald-200">
-                <div className="flex items-center gap-2 mb-3"><ClipboardCheck className="w-5 h-5 text-emerald-600" /><h4 className="font-bold text-gray-900">Rezultatet e të nxënit të kompetencave të lëndës:</h4></div>
-                <ul className="space-y-2">{plan.meta.rezultatet.map((r, i) => <li key={i} className="flex items-start gap-2 text-sm text-gray-700"><span className="text-emerald-500 mt-0.5 shrink-0">✓</span>{r}</li>)}</ul>
+              <div className="bg-emerald-50/60 rounded-2xl p-5 border border-emerald-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+                    <ClipboardCheck className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <h4 className="font-bold text-slate-900">Rezultatet e të nxënit të kompetencave të lëndës</h4>
+                </div>
+                <ul className="space-y-2.5">
+                  {plan.meta.rezultatet.map((r, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-slate-700 leading-relaxed">
+                      <span className="text-emerald-500 mt-0.5 shrink-0 font-bold">✓</span>
+                      {r}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Situata */}
-              <div className="bg-blue-50 rounded-2xl p-5 border border-blue-200">
-                <h4 className="font-bold text-gray-900 mb-2">💡 Situata e të nxënit:</h4>
-                <p className="text-sm text-gray-700 italic leading-relaxed">{plan.meta.situata}</p>
+              <div className="bg-blue-50/60 rounded-2xl p-5 border border-blue-200">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-lg">💡</span>
+                  <h4 className="font-bold text-slate-900">Situata e të nxënit</h4>
+                </div>
+                <p className="text-sm text-slate-700 italic leading-relaxed pl-7">{plan.meta.situata}</p>
               </div>
 
-              {/* Fjale kyce + Burimet + Lidhje */}
+              {/* Fjale kyce + Lidhje */}
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-amber-50 rounded-2xl p-4 border border-amber-200">
-                  <h4 className="font-bold text-gray-900 text-sm mb-2">🔑 Fjalë kyçe:</h4>
-                  <div className="flex flex-wrap gap-1.5">{plan.meta.fjaleKyce.map((f, i) => <span key={i} className="px-2.5 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full">{f}</span>)}</div>
+                <div className="bg-amber-50/60 rounded-2xl p-4 border border-amber-200">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-base">🔑</span>
+                    <h4 className="font-bold text-slate-900 text-sm">Fjalë kyçe</h4>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {plan.meta.fjaleKyce.map((f, i) => (
+                      <span key={i} className="px-2.5 py-1 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full border border-amber-200/60">
+                        {f}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div className="bg-violet-50 rounded-2xl p-4 border border-violet-200">
-                  <h4 className="font-bold text-gray-900 text-sm mb-2">🔗 Lidhje ndërkurrikulare:</h4>
-                  <p className="text-xs text-gray-700 leading-relaxed">{plan.meta.lidhjeNderkurrikulare}</p>
+                <div className="bg-violet-50/60 rounded-2xl p-4 border border-violet-200">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-base">🔗</span>
+                    <h4 className="font-bold text-slate-900 text-sm">Lidhje ndërkurrikulare</h4>
+                  </div>
+                  <p className="text-xs text-slate-700 leading-relaxed">{plan.meta.lidhjeNderkurrikulare}</p>
                 </div>
               </div>
 
               {/* Burimet */}
-              <div className="bg-gray-50 rounded-2xl p-4 border border-gray-200">
-                <h4 className="font-bold text-gray-900 text-sm mb-2">📚 Burimet dhe mjetet mësimore:</h4>
-                <ul className="space-y-1">{plan.meta.burimet.map((b, i) => <li key={i} className="text-sm text-gray-700">• {b}</li>)}</ul>
+              <div className="bg-slate-50/70 rounded-2xl p-4 border border-slate-200">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-base">📚</span>
+                  <h4 className="font-bold text-slate-900 text-sm">Burimet dhe mjetet mësimore</h4>
+                </div>
+                <ul className="space-y-1.5">
+                  {plan.meta.burimet.map((b, i) => (
+                    <li key={i} className="text-sm text-slate-700 flex items-start gap-2">
+                      <span className="text-slate-400 mt-0.5">•</span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Phases */}
-              {plan.phases.map((phase, i) => (
-                <div key={i} className={`rounded-2xl border-2 ${phase.color} p-5`}>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2"><span className="text-xl">{phase.emoji}</span><h4 className="font-bold text-gray-900">{phase.title}</h4></div>
-                    <span className="text-xs text-gray-500 bg-white/80 px-2 py-1 rounded-full">{phase.duration}</span>
+              <div className="space-y-3">
+                {plan.phases.map((phase, i) => (
+                  <div key={i} className={`rounded-2xl border-2 ${phase.color} p-5 transition-all hover:shadow-md`}>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-xl">{phase.emoji}</span>
+                        <h4 className="font-bold text-slate-900">{phase.title}</h4>
+                      </div>
+                      <span className="text-xs font-semibold text-slate-600 bg-white/90 px-2.5 py-1 rounded-full border border-slate-200/60">
+                        {phase.duration}
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed">{phase.content}</p>
                   </div>
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">{phase.content}</p>
-                </div>
-              ))}
+                ))}
+              </div>
 
               {/* Assessment Table */}
-              <div className="rounded-2xl border-2 border-gray-200 overflow-hidden">
-                <div className="bg-gray-800 text-white px-5 py-3 flex items-center gap-2">
+              <div className="rounded-2xl border-2 border-slate-200 overflow-hidden shadow-sm">
+                <div className="bg-slate-800 text-white px-5 py-3.5 flex items-center gap-2">
                   <ClipboardCheck className="w-5 h-5" />
-                  <h4 className="font-bold">VLERËSIMI SIPAS NIVELEVE</h4>
+                  <h4 className="font-bold tracking-wide">VLERËSIMI SIPAS NIVELEVE</h4>
                 </div>
-                <div className="divide-y divide-gray-200">
+                <div className="divide-y divide-slate-200">
                   {plan.assessment.map((a, i) => (
-                    <div key={i} className={`flex ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                      <div className="w-[140px] shrink-0 p-4 border-r border-gray-200">
-                        <span className={`inline-block px-2 py-1 rounded-lg text-xs font-bold ${
+                    <div key={i} className={`flex ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/70'}`}>
+                      <div className="w-[140px] shrink-0 p-4 border-r border-slate-200">
+                        <span className={`inline-block px-2.5 py-1 rounded-lg text-xs font-bold ${
                           i === 0 ? 'bg-amber-100 text-amber-800' : i === 1 ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'
                         }`}>{a.level}</span>
                       </div>
-                      <div className="flex-1 p-4 text-sm text-gray-700 leading-relaxed">{a.description}</div>
+                      <div className="flex-1 p-4 text-sm text-slate-700 leading-relaxed">{a.description}</div>
                     </div>
                   ))}
                 </div>
@@ -765,13 +889,23 @@ export default function LessonPlanner({ onClose }: Props) {
 
         {/* Footer */}
         {step === 'preview' && (
-          <div className="p-5 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row gap-3 shrink-0">
-            <button onClick={() => { setStep('form'); setPlan(null); }} className="flex-1 py-3 border-2 border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-white">← Gjenero Tjetër</button>
-            <button onClick={handleCopy} className="flex-1 py-3 bg-gray-100 text-gray-700 font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-gray-200">
-              {copied ? <><Check className="w-5 h-5 text-green-600" /> Kopjuar!</> : <><Copy className="w-5 h-5" /> Kopjo</>}
+          <div className="px-5 py-4 border-t border-slate-100 bg-slate-50/80 flex flex-col sm:flex-row gap-3 shrink-0">
+            <button
+              onClick={() => { setStep('form'); setPlan(null); }}
+              className="flex-1 py-3 border-2 border-slate-200 text-slate-700 font-semibold rounded-xl hover:bg-white hover:border-slate-300 transition-all"
+            >
+              ← Gjenero Tjetër
             </button>
-            <button onClick={() => plan && buildPlanPdf(plan).save(`PlanDitar_${topic.replace(/\s+/g, '_')}.pdf`)}
-              className="flex-1 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-xl shadow-xl flex items-center justify-center gap-2 hover:-translate-y-0.5 transition-all">
+            <button
+              onClick={handleCopy}
+              className="flex-1 py-3 bg-slate-100 text-slate-700 font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-slate-200 transition-all"
+            >
+              {copied ? <><Check className="w-5 h-5 text-emerald-600" /> Kopjuar!</> : <><Copy className="w-5 h-5" /> Kopjo</>}
+            </button>
+            <button
+              onClick={() => plan && buildPlanPdf(plan).save(`PlanDitar_${topic.replace(/\s+/g, '_')}.pdf`)}
+              className="flex-1 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/30 transition-all"
+            >
               <Download className="w-5 h-5" /> Shkarko PDF
             </button>
           </div>
