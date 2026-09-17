@@ -18,11 +18,12 @@ import TeacherAuth from './components/teacher/TeacherAuth';
 import TeacherDashboard from './components/teacher/TeacherDashboard';
 import CoordinatorDashboard from './components/coordinator/CoordinatorDashboard';
 import StudentJoin from './components/student/StudentJoin';
+import QuizSystem from './components/student/QuizSystem';
 import StudentLiveJoin from './components/live/StudentLiveJoin';
 import ParentAuth from './components/parent/ParentAuth';
 import ParentDashboard from './components/parent/ParentDashboard';
 
-type Page = 'home' | 'auth' | 'teacher' | 'coordinator' | 'join' | 'live' | 'parent-auth' | 'parent';
+type Page = 'home' | 'auth' | 'teacher' | 'coordinator' | 'join' | 'quizzes' | 'live' | 'parent-auth' | 'parent';
 
 function AppRouter() {
   const [page, setPage] = useState<Page>('home');
@@ -57,7 +58,11 @@ function AppRouter() {
 
   // ─── Student join classroom ───
   if (page === 'join') {
-    return <StudentJoin onBack={goHome} />;
+    return <StudentJoin onBack={goHome} onQuiz={() => setPage('quizzes')} />;
+  }
+
+  if (page === 'quizzes') {
+    return <QuizSystem onBack={goHome} />;
   }
 
   // ─── Live presentation join ───
