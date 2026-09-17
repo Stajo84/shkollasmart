@@ -4,9 +4,10 @@ import { useAuth } from '../../context/AuthContext';
 
 interface StudentJoinProps {
   onBack: () => void;
+  onQuiz?: () => void;
 }
 
-export default function StudentJoin({ onBack }: StudentJoinProps) {
+export default function StudentJoin({ onBack, onQuiz }: StudentJoinProps) {
   const { joinClassroom, classrooms } = useAuth();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -208,10 +209,10 @@ export default function StudentJoin({ onBack }: StudentJoinProps) {
             </div>
 
             <button
-              onClick={onBack}
+              onClick={onQuiz || onBack}
               className="w-full py-3.5 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg shadow-violet-200 transition-all"
             >
-              Vazhdo në SmartSchool
+              Shko te kuizet
             </button>
           </div>
         )}
